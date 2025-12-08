@@ -1,0 +1,19 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Глобальный уровень: ERROR -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- Отключаем Hibernate -->
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="ERROR"/>
+    <logger name="org.hibernate.tool.hbm2ddl" level="ERROR"/>
+
+</configuration>
