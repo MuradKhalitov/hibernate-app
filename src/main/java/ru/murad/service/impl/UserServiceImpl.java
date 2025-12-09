@@ -2,6 +2,7 @@ package ru.murad.service.impl;
 
 import ru.murad.dao.UserDao;
 import ru.murad.exception.DaoException;
+import ru.murad.exception.ServiceException;
 import ru.murad.model.User;
 import ru.murad.service.UserService;
 
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.save(user);
         } catch (DaoException e) {
-            throw new RuntimeException("Failed to create user: " + e.getMessage(), e);
+            throw new ServiceException("Failed to create user: " + e.getMessage(), e);
         }
     }
 
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> optional = userDao.findById(id);
         if (optional.isEmpty()) {
-            throw new RuntimeException("User with id=" + id + " not found");
+            throw new ServiceException("User with id=" + id + " not found");
         }
 
         User user = optional.get();
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.update(user);
         } catch (DaoException e) {
-            throw new RuntimeException("Failed to update user: " + e.getMessage(), e);
+            throw new ServiceException("Failed to update user: " + e.getMessage(), e);
         }
     }
 
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.delete(id);
         } catch (DaoException e) {
-            throw new RuntimeException("Failed to delete user: " + e.getMessage(), e);
+            throw new ServiceException("Failed to delete user: " + e.getMessage(), e);
         }
     }
 }
