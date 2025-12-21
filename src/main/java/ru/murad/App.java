@@ -1,5 +1,7 @@
 package ru.murad;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import ru.murad.dao.UserDao;
 import ru.murad.model.User;
 import ru.murad.service.impl.UserServiceImpl;
@@ -13,7 +15,11 @@ public class App {
 
     public static void main(String[] args) {
 
-        UserService userService = new UserServiceImpl(new UserDao());
+        SessionFactory sessionFactory = buildSessionFactory();
+
+        UserDao userDao = new UserDao(sessionFactory);
+        UserService userService = new UserServiceImpl(userDao);
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -142,6 +148,12 @@ public class App {
                 System.out.print("Введите число: ");
             }
         }
+    }
+
+    private static SessionFactory buildSessionFactory() {
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(User.class);
+        return configuration.buildSessionFactory();
     }
 }
 
